@@ -1,0 +1,411 @@
+
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Для моего любимого воробушка</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      padding: 20px;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: #5c2841;
+      background:
+        radial-gradient(circle at 20% 20%, #fff3f8 0, transparent 35%),
+        radial-gradient(circle at 80% 80%, #ffd5e5 0, transparent 40%),
+        linear-gradient(135deg, #ffc1d6, #ffe7ef, #f7c9df);
+    }
+
+    .background-hearts {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .floating-heart {
+      position: absolute;
+      bottom: -60px;
+      color: rgba(255, 76, 139, 0.35);
+      animation: flyUp linear infinite;
+      user-select: none;
+    }
+
+    @keyframes flyUp {
+      0% {
+        transform: translateY(0) rotate(0deg) scale(0.7);
+        opacity: 0;
+      }
+
+      15% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-120vh) rotate(360deg) scale(1.3);
+        opacity: 0;
+      }
+    }
+
+    .card {
+      position: relative;
+      z-index: 2;
+      width: min(100%, 580px);
+      padding: 45px 35px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      border-radius: 32px;
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow:
+        0 25px 70px rgba(156, 45, 91, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(18px);
+      animation: cardAppearance 1s ease both;
+    }
+
+    @keyframes cardAppearance {
+      from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .bird {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 85px;
+      height: 85px;
+      margin-bottom: 18px;
+      border-radius: 50%;
+      font-size: 48px;
+      background: linear-gradient(135deg, #fff, #ffe2ec);
+      box-shadow: 0 12px 30px rgba(222, 83, 134, 0.2);
+      animation: birdBounce 2.5s ease-in-out infinite;
+    }
+
+    @keyframes birdBounce {
+      0%, 100% {
+        transform: translateY(0) rotate(-3deg);
+      }
+
+      50% {
+        transform: translateY(-8px) rotate(3deg);
+      }
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: clamp(30px, 7vw, 48px);
+      line-height: 1.1;
+      color: #a52f61;
+      text-shadow: 0 3px 10px rgba(255, 121, 166, 0.2);
+    }
+
+    .subtitle {
+      margin-bottom: 30px;
+      font-size: 17px;
+      color: #986078;
+    }
+
+    .compliment-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 135px;
+      margin-bottom: 25px;
+      padding: 24px;
+      border-radius: 24px;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 238, 245, 0.95),
+        rgba(255, 255, 255, 0.9)
+      );
+      box-shadow: inset 0 0 0 1px rgba(255, 126, 170, 0.15);
+    }
+
+    #compliment {
+      font-size: clamp(20px, 5vw, 27px);
+      font-weight: 600;
+      line-height: 1.4;
+      color: #8f2f58;
+    }
+
+    .show-compliment {
+      animation: complimentAppearance 0.6s ease;
+    }
+
+    @keyframes complimentAppearance {
+      0% {
+        opacity: 0;
+        transform: translateY(15px) scale(0.95);
+      }
+
+      60% {
+        transform: translateY(-3px) scale(1.03);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 15px 25px;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+    }
+
+    #nextButton {
+      color: white;
+      background: linear-gradient(135deg, #ff568d, #d93470);
+      box-shadow: 0 12px 25px rgba(217, 52, 112, 0.3);
+    }
+
+    #restartButton {
+      color: #a52f61;
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 8px 20px rgba(165, 47, 97, 0.13);
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+    }
+
+    button:active {
+      transform: translateY(1px) scale(0.97);
+    }
+
+    #nextButton:hover {
+      box-shadow: 0 16px 30px rgba(217, 52, 112, 0.4);
+    }
+
+    .counter {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #ae748c;
+    }
+
+    .signature {
+      margin-top: 18px;
+      font-size: 14px;
+      font-style: italic;
+      color: #b26d89;
+    }
+
+    .click-heart {
+      position: fixed;
+      z-index: 20;
+      pointer-events: none;
+      font-size: 25px;
+      animation: heartBurst 1.1s ease-out forwards;
+    }
+
+    @keyframes heartBurst {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -150px) scale(1.5) rotate(25deg);
+      }
+    }
+
+    @media (max-width: 500px) {
+      .card {
+        padding: 35px 20px;
+        border-radius: 25px;
+      }
+
+      .compliment-box {
+        min-height: 150px;
+        padding: 20px;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="background-hearts" id="backgroundHearts"></div>
+
+  <main class="card">
+    <div class="bird">🐦</div>
+
+    <h1>Для моего любимого воробушка</h1>
+
+    <p class="subtitle">
+      Нажимай на кнопку — здесь для тебя кое-что приятное 💗
+    </p>
+
+    <div class="compliment-box">
+      <p id="compliment">
+        Ты готова узнать, какая ты замечательная?
+      </p>
+    </div>
+
+    <div class="buttons">
+      <button id="nextButton">
+        Получить комплимент 💖
+      </button>
+
+      <button id="restartButton">
+        Начать сначала ↻
+      </button>
+    </div>
+
+    <p class="counter" id="counter">
+      Комплимент ещё не открыт
+    </p>
+
+    <p class="signature">
+      Сделано с любовью специально для тебя ❤️
+    </p>
+  </main>
+
+  <script>
+    const compliments = [
+      "Ты самая красивая девушка на свете 💖",
+      "Твоя улыбка делает мой день намного светлее ☀️",
+      "Рядом с тобой я чувствую себя по-настоящему счастливым 🥰",
+      "У тебя невероятно красивые глаза ✨",
+      "Ты умеешь превращать обычные моменты в особенные 🌸",
+      "Твой голос — один из моих самых любимых звуков 💕",
+      "Ты добрая, нежная и удивительная 🫶",
+      "Мне очень повезло, что именно ты есть в моей жизни 🍀",
+      "Каждая встреча с тобой становится прекрасным воспоминанием 💗",
+      "Ты вдохновляешь меня становиться лучше 🌷",
+      "С тобой хочется смеяться, мечтать и делиться всем на свете 💫",
+      "Ты прекрасна даже тогда, когда сама этого не замечаешь 💝",
+      "Твои объятия — моё самое уютное место 🤗",
+      "У тебя удивительная способность делать меня счастливым 💞",
+      "Мой любимый воробушек, ты для меня самая особенная 🐦❤️",
+      "Я могу смотреть на тебя бесконечно и каждый раз влюбляться заново 💘",
+      "Спасибо тебе за твою заботу, нежность и тепло 🌹",
+      "Ты — лучшее, что могло со мной произойти 💓",
+      "Мир становится прекраснее просто потому, что в нём есть ты 🌍💕",
+      "Я люблю тебя сильнее, чем могут передать любые слова ❤️"
+    ];
+
+    const complimentText = document.getElementById("compliment");
+    const nextButton = document.getElementById("nextButton");
+    const restartButton = document.getElementById("restartButton");
+    const counter = document.getElementById("counter");
+
+    let currentIndex = 0;
+
+    function showNextCompliment() {
+      complimentText.classList.remove("show-compliment");
+      void complimentText.offsetWidth;
+
+      complimentText.textContent = compliments[currentIndex];
+      complimentText.classList.add("show-compliment");
+
+      counter.textContent = "Комплимент " + (currentIndex + 1) + " из " + compliments.length;
+
+      createHeartBurst();
+
+      currentIndex++;
+
+      if (currentIndex >= compliments.length) {
+        currentIndex = 0;
+        nextButton.textContent = "Прочитать ещё раз 💞";
+      } else {
+        nextButton.textContent = "Следующий комплимент 💖";
+      }
+    }
+
+    function restartCompliments() {
+      currentIndex = 0;
+      complimentText.classList.remove("show-compliment");
+      void complimentText.offsetWidth;
+
+      complimentText.textContent = "Ты готова узнать, какая ты замечательная?";
+      complimentText.classList.add("show-compliment");
+      counter.textContent = "Комплимент ещё не открыт";
+      nextButton.textContent = "Получить комплимент 💖";
+    }
+
+    function createHeartBurst() {
+      const buttonRect = nextButton.getBoundingClientRect();
+      const startX = buttonRect.left + buttonRect.width / 2;
+      const startY = buttonRect.top + buttonRect.height / 2;
+      const hearts = ["💖", "💕", "💗", "💘", "🌸"];
+
+      for (let i = 0; i < 7; i++) {
+        const heart = document.createElement("span");
+        heart.className = "click-heart";
+        heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+        heart.style.left = startX + (Math.random() * 100 - 50) + "px";
+        heart.style.top = startY + (Math.random() * 40 - 20) + "px";
+        heart.style.animationDelay = Math.random() * 0.15 + "s";
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 1300);
+      }
+    }
+
+    function createBackgroundHearts() {
+      const container = document.getElementById("backgroundHearts");
+      const symbols = ["♥", "♡", "❤"];
+
+      for (let i = 0; i < 20; i++) {
+        const heart = document.createElement("span");
+        heart.className = "floating-heart";
+        heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        heart.style.left = Math.random() * 100 + "%";
+        heart.style.fontSize = 15 + Math.random() * 28 + "px";
+        heart.style.animationDuration = 8 + Math.random() * 10 + "s";
+        heart.style.animationDelay = Math.random() * 10 + "s";
+        container.appendChild(heart);
+      }
+    }
+
+    // Надёжно подключаем кнопки после загрузки страницы.
+    document.addEventListener("DOMContentLoaded", function () {
+      nextButton.addEventListener("click", showNextCompliment);
+      restartButton.addEventListener("click", restartCompliments);
+      createBackgroundHearts();
+    });
+  </script>
+</body>
+</html>
